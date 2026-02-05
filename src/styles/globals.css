@@ -1,183 +1,576 @@
 @custom-variant dark (&:is(.dark *));
 
+/* ============================================
+   TEMA 1: MODERN PREMIUM
+   Glassmorphism + Gradientes + Sombras Profundas
+   Sidebar Expandida com Ícones Grandes
+   ============================================ */
 :root {
   --font-size: 16px;
+  
+  /* Layout */
+  --sidebar-width: 280px;
+  --sidebar-style: expanded;
+  --card-style: glass;
+  
+  /* Backgrounds */
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --content-bg: rgba(255, 255, 255, 0.95);
+  --foreground: #1a202c;
+  
+  /* Sidebar Premium */
+  --sidebar-bg: rgba(30, 41, 59, 0.95);
+  --sidebar-text: #f1f5f9;
+  --sidebar-hover: rgba(59, 130, 246, 0.2);
+  --sidebar-active: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  
+  /* Cards com Glass Effect */
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(255, 255, 255, 0.3);
+  --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --card-blur: 12px;
+  
+  /* Cores Primárias */
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-light: #dbeafe;
+  --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  
+  /* Status Colors */
+  --success: #10b981;
+  --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --warning: #f59e0b;
+  --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  --danger: #ef4444;
+  --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  
+  /* Effects */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.24);
+  
+  --radius: 1.25rem;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   TEMA 2: MINIMALIST CLEAN
+   Design Flat + Espaçoso + Sidebar Lateral Clara
+   Layout Amplo com Muitos Espaços em Branco
+   ============================================ */
+[data-theme="minimalist"] {
+  --font-size: 15px;
+  
+  /* Layout Diferente */
+  --sidebar-width: 240px;
+  --sidebar-style: minimal;
+  --card-style: flat;
+  
+  /* Backgrounds Limpos */
   --background: #ffffff;
-  --foreground: oklch(0.145 0 0);
-  --card: #ffffff;
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: #030213;
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.95 0.0058 264.53);
-  --secondary-foreground: #030213;
-  --muted: #ececf0;
-  --muted-foreground: #717182;
-  --accent: #e9ebef;
-  --accent-foreground: #030213;
-  --destructive: #d4183d;
-  --destructive-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.1);
-  --input: transparent;
-  --input-background: #f3f3f5;
-  --switch-background: #cbced4;
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #030213;
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --content-bg: #fafafa;
+  --foreground: #0a0a0a;
+  
+  /* Sidebar Clara Minimalista */
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #525252;
+  --sidebar-hover: #f5f5f5;
+  --sidebar-active: #0a0a0a;
+  --sidebar-border: #e5e5e5;
+  
+  /* Cards Flat */
+  --card-bg: #ffffff;
+  --card-border: #e5e5e5;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --card-blur: 0px;
+  
+  /* Cores Primárias Monocromáticas */
+  --primary: #0a0a0a;
+  --primary-hover: #262626;
+  --primary-light: #f5f5f5;
+  --primary-gradient: #0a0a0a;
+  
+  /* Status Colors Sutis */
+  --success: #16a34a;
+  --success-gradient: #16a34a;
+  --warning: #ca8a04;
+  --warning-gradient: #ca8a04;
+  --danger: #dc2626;
+  --danger-gradient: #dc2626;
+  
+  /* Effects Mínimos */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 4px 12px rgba(0, 0, 0, 0.1);
+  
+  --radius: 0.5rem;
+  --transition: all 0.15s ease;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+/* ============================================
+   TEMA 3: DARK PRO
+   Cyberpunk + Neon + Sidebar Compacta Flutuante
+   Dark com Accents Coloridos
+   ============================================ */
+[data-theme="dark"] {
+  --font-size: 16px;
+  
+  /* Layout Compacto */
+  --sidebar-width: 80px;
+  --sidebar-style: floating;
+  --card-style: neon;
+  
+  /* Backgrounds Dark */
+  --background: #0a0a0a;
+  --content-bg: #0f0f0f;
+  --foreground: #fafafa;
+  
+  /* Sidebar Compacta Dark */
+  --sidebar-bg: #0a0a0a;
+  --sidebar-text: #737373;
+  --sidebar-hover: #1a1a1a;
+  --sidebar-active: #6366f1;
+  --sidebar-border: #262626;
+  
+  /* Cards com Neon Border */
+  --card-bg: #171717;
+  --card-border: #262626;
+  --card-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+  --card-blur: 0px;
+  
+  /* Cores Neon */
+  --primary: #6366f1;
+  --primary-hover: #818cf8;
+  --primary-light: #312e81;
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  
+  /* Status Colors Neon */
+  --success: #10b981;
+  --success-gradient: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+  --warning: #f59e0b;
+  --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #fb923c 100%);
+  --danger: #ef4444;
+  --danger-gradient: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+  
+  /* Effects com Glow */
+  --shadow-sm: 0 0 10px rgba(99, 102, 241, 0.1);
+  --shadow-md: 0 0 20px rgba(99, 102, 241, 0.2);
+  --shadow-lg: 0 0 30px rgba(99, 102, 241, 0.3);
+  --shadow-xl: 0 0 40px rgba(99, 102, 241, 0.4);
+  
+  --radius: 0.75rem;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ============================================
+   APLICAÇÃO DAS VARIÁVEIS
+   ============================================ */
 @theme inline {
+  /* Layout */
   --color-background: var(--background);
+  --color-content-bg: var(--content-bg);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-input-background: var(--input-background);
-  --color-switch-background: var(--switch-background);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  
+  /* Sidebar */
+  --color-sidebar-bg: var(--sidebar-bg);
+  --color-sidebar-text: var(--sidebar-text);
+  --color-sidebar-hover: var(--sidebar-hover);
+  --color-sidebar-active: var(--sidebar-active);
   --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* Cards */
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  
+  /* Primary */
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+  
+  /* Status */
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  
+  /* Radius */
+  --radius-sm: calc(var(--radius) - 0.25rem);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 0.25rem);
+  --radius-xl: calc(var(--radius) + 0.5rem);
 }
 
+/* ============================================
+   ESTILOS BASE
+   ============================================ */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: var(--transition);
   }
 
   body {
-    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  /* Scrollbar - Modern Premium */
+  :root::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  :root::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+
+  :root::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.5);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  :root::-webkit-scrollbar-thumb:hover {
+    background: rgba(59, 130, 246, 0.8);
+    background-clip: content-box;
+  }
+
+  /* Scrollbar - Minimalist */
+  [data-theme="minimalist"]::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  [data-theme="minimalist"]::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  [data-theme="minimalist"]::-webkit-scrollbar-thumb {
+    background: #e5e5e5;
+    border-radius: 3px;
+  }
+
+  [data-theme="minimalist"]::-webkit-scrollbar-thumb:hover {
+    background: #d4d4d4;
+  }
+
+  /* Scrollbar - Dark Pro */
+  [data-theme="dark"]::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  [data-theme="dark"]::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  [data-theme="dark"]::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 4px;
+  }
+
+  [data-theme="dark"]::-webkit-scrollbar-thumb:hover {
+    background: #6366f1;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
   }
 }
 
-/**
- * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
- */
+/* ============================================
+   TIPOGRAFIA
+   ============================================ */
 @layer base {
-  :where(:not(:has([class*=' text-']), :not(:has([class^='text-'])))) {
-    h1 {
-      font-size: var(--text-2xl);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    h2 {
-      font-size: var(--text-xl);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    h3 {
-      font-size: var(--text-lg);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    h4 {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    label {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    button {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-medium);
-      line-height: 1.5;
-    }
-
-    input {
-      font-size: var(--text-base);
-      font-weight: var(--font-weight-normal);
-      line-height: 1.5;
-    }
+  /* Modern Premium - Mais dramático */
+  :root h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
+
+  :root h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  :root h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  /* Minimalist - Mais sutil */
+  [data-theme="minimalist"] h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    background: none;
+    -webkit-text-fill-color: var(--foreground);
+    color: var(--foreground);
+  }
+
+  [data-theme="minimalist"] h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  [data-theme="minimalist"] h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  /* Dark Pro - Neon glow */
+  [data-theme="dark"] h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--foreground);
+    text-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+  }
+
+  [data-theme="dark"] h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  [data-theme="dark"] h3 {
+    font-size: 1.375rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  /* Elementos comuns */
+  label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  button {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  input, textarea {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}
+
+/* ============================================
+   ANIMAÇÕES
+   ============================================ */
+
+/* Modern Premium - Bounce & Scale */
+@keyframes slideInBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  60% {
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Minimalist - Simple Fade */
+@keyframes fadeInSimple {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark Pro - Glow & Slide */
+@keyframes glowSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+    box-shadow: 0 0 0 rgba(99, 102, 241, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.8);
+  }
+}
+
+/* Aplicação por tema */
+:root .animate-card {
+  animation: slideInBounce 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="minimalist"] .animate-card {
+  animation: fadeInSimple 0.3s ease;
+}
+
+[data-theme="dark"] .animate-card {
+  animation: glowSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+[data-theme="dark"] .animate-pulse {
+  animation: neonPulse 2s ease-in-out infinite;
+}
+
+/* ============================================
+   COMPONENTES ESPECIAIS
+   ============================================ */
+
+/* Glass Effect - Modern Premium */
+:root .glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(var(--card-blur));
+  -webkit-backdrop-filter: blur(var(--card-blur));
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: var(--radius);
+}
+
+/* Flat Card - Minimalist */
+[data-theme="minimalist"] .glass-card {
+  background: var(--card-bg);
+  backdrop-filter: none;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: var(--radius);
+}
+
+/* Neon Card - Dark Pro */
+[data-theme="dark"] .glass-card {
+  background: var(--card-bg);
+  backdrop-filter: none;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: var(--radius);
+  position: relative;
+}
+
+[data-theme="dark"] .glass-card:hover {
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.25);
+}
+
+/* Gradient Button - Modern Premium */
+:root .btn-primary {
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+
+:root .btn-primary:hover {
+  box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Flat Button - Minimalist */
+[data-theme="minimalist"] .btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+  box-shadow: none;
+}
+
+[data-theme="minimalist"] .btn-primary:hover {
+  background: var(--primary-hover);
+  transform: none;
+}
+
+/* Neon Button - Dark Pro */
+[data-theme="dark"] .btn-primary {
+  background: var(--primary-gradient);
+  color: white;
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+  border-color: #818cf8;
+}
+
+/* Status Badges */
+.badge-success {
+  background: var(--success-gradient);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-warning {
+  background: var(--warning-gradient);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-danger {
+  background: var(--danger-gradient);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 html {

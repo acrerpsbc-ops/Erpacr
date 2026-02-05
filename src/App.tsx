@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ThemeProvider } from './components/erp/ThemeContext';
 import { ERPSidebar } from './components/erp/ERPSidebar';
 import { Dashboard } from './components/erp/modules/Dashboard';
 import { PDV } from './components/erp/modules/PDV';
@@ -54,14 +55,19 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden bg-slate-100 flex">
-      {/* Sidebar de Navegação */}
-      <ERPSidebar activeModule={activeModule} onNavigate={setActiveModule} />
+    <ThemeProvider>
+      <div 
+        className="h-screen w-screen overflow-hidden flex"
+        style={{ background: 'var(--background)' }}
+      >
+        {/* Sidebar de Navegação */}
+        <ERPSidebar activeModule={activeModule} onNavigate={setActiveModule} />
 
-      {/* Conteúdo Principal */}
-      <div className="flex-1 overflow-hidden">
-        {renderModule()}
+        {/* Conteúdo Principal */}
+        <div className="flex-1 overflow-hidden">
+          {renderModule()}
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }

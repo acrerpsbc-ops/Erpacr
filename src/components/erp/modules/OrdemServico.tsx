@@ -12,6 +12,8 @@ import {
   Calendar,
   DollarSign
 } from 'lucide-react';
+import { useTheme } from '../ThemeContext';
+import { NovaOrdemServico } from './NovaOrdemServico';
 
 type OSStatus = 'aberta' | 'em-reparo' | 'aguardando-pecas' | 'concluida' | 'entregue';
 
@@ -116,6 +118,7 @@ const getStatusLabel = (status: OSStatus) => {
 };
 
 export function OrdemServico() {
+  const { theme } = useTheme();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<OSStatus | 'todas'>('todas');
   const [showNewOS, setShowNewOS] = useState(false);
@@ -131,19 +134,41 @@ export function OrdemServico() {
     return matchesSearch && matchesStatus;
   });
 
+  // Se modal Nova OS estiver aberta
+  if (showNewOS) {
+    return (
+      <NovaOrdemServico 
+        onClose={() => setShowNewOS(false)}
+        onSave={() => {
+          setShowNewOS(false);
+          // Lógica de salvar
+        }}
+      />
+    );
+  }
+
   return (
-    <div className="h-full overflow-y-auto bg-slate-50">
+    <div className="h-full overflow-y-auto" style={{ background: 'var(--content-bg)' }}>
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-8 py-6">
+      <div 
+        className="border-b px-8 py-6"
+        style={{ 
+          background: 'var(--card-bg)',
+          borderColor: 'var(--card-border)'
+        }}
+      >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl mb-2 text-slate-900">Ordens de Serviço</h1>
-            <p className="text-slate-600">Gestão completa de reparos técnicos</p>
+            <h1 className="mb-2" style={{ color: 'var(--foreground)' }}>
+              {theme === 'modern' && '🔧 '}Ordens de Serviço
+            </h1>
+            <p style={{ color: 'var(--foreground)', opacity: 0.7 }}>
+              Gestão completa de reparos técnicos
+            </p>
           </div>
           <button 
             onClick={() => setShowNewOS(true)}
-            className="flex items-center gap-3 bg-orange-600 text-white px-6 py-4 rounded-2xl
-                     hover:bg-orange-700 transition-all shadow-lg hover:shadow-xl"
+            className="btn-primary flex items-center gap-3 px-6 py-4 rounded-2xl"
           >
             <Plus className="w-6 h-6" />
             <span className="font-medium text-lg">Nova OS</span>
@@ -152,7 +177,13 @@ export function OrdemServico() {
       </div>
 
       {/* Filters and Stats */}
-      <div className="px-8 py-6 bg-white border-b border-slate-200">
+      <div 
+        className="px-8 py-6 border-b"
+        style={{ 
+          background: 'var(--card-bg)',
+          borderColor: 'var(--card-border)'
+        }}
+      >
         <div className="flex items-center gap-4 mb-6">
           {/* Search */}
           <div className="flex-1 relative">

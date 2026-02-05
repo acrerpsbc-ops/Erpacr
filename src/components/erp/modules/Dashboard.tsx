@@ -9,10 +9,12 @@ import {
   AlertCircle,
   Users,
   ArrowUp,
-  ArrowDown
+  ArrowDown,
+  Zap
 } from 'lucide-react';
 import { ModuleType } from '../../../App';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useTheme } from '../ThemeContext';
 
 interface DashboardProps {
   onNavigate: (module: ModuleType) => void;
@@ -36,137 +38,251 @@ const recentOrders = [
 ];
 
 export function Dashboard({ onNavigate }: DashboardProps) {
+  const { theme } = useTheme();
+
+  const kpis = [
+    { 
+      id: 'os',
+      title: 'OS Abertas', 
+      value: '28', 
+      change: '+12%', 
+      positive: true, 
+      icon: Wrench,
+      gradient: 'from-orange-500 to-orange-600',
+      color: '#f97316'
+    },
+    { 
+      id: 'vendas',
+      title: 'Vendas Hoje', 
+      value: 'R$ 12.4K', 
+      change: '+8%', 
+      positive: true, 
+      icon: ShoppingCart,
+      gradient: 'from-green-500 to-green-600',
+      color: '#10b981'
+    },
+    { 
+      id: 'caixa',
+      title: 'Caixa Atual', 
+      value: 'R$ 8.2K', 
+      change: '+15%', 
+      positive: true, 
+      icon: DollarSign,
+      gradient: 'from-blue-500 to-blue-600',
+      color: '#3b82f6'
+    },
+    { 
+      id: 'estoque',
+      title: 'Estoque Baixo', 
+      value: '12', 
+      change: '-4', 
+      positive: false, 
+      icon: Package,
+      gradient: 'from-red-500 to-red-600',
+      color: '#ef4444'
+    },
+  ];
+
   return (
-    <div className="h-full overflow-y-auto bg-slate-50">
-      {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-8 py-6">
+    <div 
+      className="h-full overflow-y-auto"
+      style={{ background: 'var(--content-bg)' }}
+    >
+      {/* Header - Adaptável por tema */}
+      <div 
+        className={`border-b px-8 py-6 ${theme === 'modern' ? 'glass-card' : ''}`}
+        style={{ 
+          background: theme === 'modern' 
+            ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)'
+            : 'var(--card-bg)',
+          borderColor: 'var(--card-border)'
+        }}
+      >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl mb-2 text-slate-900">Dashboard</h1>
-            <p className="text-slate-600">Visão geral do negócio em tempo real</p>
+            <h1 
+              className="mb-2"
+              style={{ color: 'var(--foreground)' }}
+            >
+              {theme === 'modern' && '✨ '}Dashboard{theme === 'dark' && ' Pro'}
+            </h1>
+            <p style={{ color: 'var(--foreground)', opacity: 0.7 }}>
+              Visão geral do negócio em tempo real
+            </p>
           </div>
-          <div className="flex items-center gap-3 text-sm text-slate-600">
+          <div className="flex items-center gap-3" style={{ color: 'var(--foreground)', opacity: 0.7 }}>
             <Clock className="w-5 h-5" />
-            <span>Última atualização: agora</span>
+            <span className="text-sm">Última atualização: agora</span>
           </div>
         </div>
       </div>
 
       {/* Content */}
       <div className="p-8 space-y-8">
-        {/* KPIs */}
-        <div className="grid grid-cols-4 gap-6">
-          {/* OS Abertas */}
-          <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl p-6 text-white shadow-xl">
-            <div className="flex items-start justify-between mb-4">
-              <Wrench className="w-8 h-8" />
-              <div className="flex items-center gap-1 text-sm bg-orange-400/30 px-3 py-1 rounded-full">
-                <ArrowUp className="w-4 h-4" />
-                <span>12%</span>
-              </div>
-            </div>
-            <p className="text-orange-100 text-sm mb-1">OS Abertas</p>
-            <p className="text-4xl font-bold">28</p>
-          </div>
-
-          {/* Vendas Hoje */}
-          <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-3xl p-6 text-white shadow-xl">
-            <div className="flex items-start justify-between mb-4">
-              <ShoppingCart className="w-8 h-8" />
-              <div className="flex items-center gap-1 text-sm bg-green-400/30 px-3 py-1 rounded-full">
-                <ArrowUp className="w-4 h-4" />
-                <span>8%</span>
-              </div>
-            </div>
-            <p className="text-green-100 text-sm mb-1">Vendas Hoje</p>
-            <p className="text-4xl font-bold">R$ 12.4K</p>
-          </div>
-
-          {/* Caixa Atual */}
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl p-6 text-white shadow-xl">
-            <div className="flex items-start justify-between mb-4">
-              <DollarSign className="w-8 h-8" />
-              <div className="flex items-center gap-1 text-sm bg-blue-400/30 px-3 py-1 rounded-full">
-                <ArrowUp className="w-4 h-4" />
-                <span>15%</span>
-              </div>
-            </div>
-            <p className="text-blue-100 text-sm mb-1">Caixa Atual</p>
-            <p className="text-4xl font-bold">R$ 8.2K</p>
-          </div>
-
-          {/* Estoque Baixo */}
-          <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-3xl p-6 text-white shadow-xl">
-            <div className="flex items-start justify-between mb-4">
-              <Package className="w-8 h-8" />
-              <div className="flex items-center gap-1 text-sm bg-red-400/30 px-3 py-1 rounded-full">
-                <AlertCircle className="w-4 h-4" />
-                <span>Alerta</span>
-              </div>
-            </div>
-            <p className="text-red-100 text-sm mb-1">Itens c/ Estoque Baixo</p>
-            <p className="text-4xl font-bold">14</p>
-          </div>
+        {/* KPIs - Diferentes por tema */}
+        <div className={`grid gap-6 ${theme === 'dark' ? 'grid-cols-2' : 'grid-cols-4'}`}>
+          {kpis.map((kpi) => {
+            const Icon = kpi.icon;
+            
+            // MODERN PREMIUM - Gradientes vibrantes
+            if (theme === 'modern') {
+              return (
+                <div 
+                  key={kpi.id}
+                  className={`bg-gradient-to-br ${kpi.gradient} rounded-3xl p-6 text-white shadow-xl animate-card hover:scale-105 cursor-pointer`}
+                  style={{ transition: 'var(--transition)' }}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <div 
+                      className={`flex items-center gap-1 text-sm px-3 py-1 rounded-full ${
+                        kpi.positive ? 'bg-white/20' : 'bg-black/20'
+                      }`}
+                    >
+                      {kpi.positive ? <ArrowUp className="w-4 h-4" /> : <ArrowDown className="w-4 h-4" />}
+                      <span>{kpi.change}</span>
+                    </div>
+                  </div>
+                  <p className="text-sm opacity-90 mb-1">{kpi.title}</p>
+                  <p className="text-4xl font-bold">{kpi.value}</p>
+                </div>
+              );
+            }
+            
+            // MINIMALIST CLEAN - Cards brancos flat
+            if (theme === 'minimalist') {
+              return (
+                <div 
+                  key={kpi.id}
+                  className="bg-white rounded-xl p-6 border animate-card hover:shadow-md cursor-pointer"
+                  style={{ 
+                    borderColor: 'var(--card-border)',
+                    boxShadow: 'var(--shadow-sm)',
+                    transition: 'var(--transition)'
+                  }}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div 
+                      className="w-10 h-10 rounded-lg flex items-center justify-center"
+                      style={{ 
+                        background: kpi.color + '15',
+                        color: kpi.color
+                      }}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <span 
+                      className={`text-sm font-medium ${kpi.positive ? 'text-green-600' : 'text-red-600'}`}
+                    >
+                      {kpi.change}
+                    </span>
+                  </div>
+                  <p className="text-sm text-neutral-600 mb-2">{kpi.title}</p>
+                  <p className="text-3xl font-semibold text-neutral-900">{kpi.value}</p>
+                </div>
+              );
+            }
+            
+            // DARK PRO - Cards dark com neon border
+            if (theme === 'dark') {
+              return (
+                <div 
+                  key={kpi.id}
+                  className="rounded-2xl p-6 border animate-card hover:border-opacity-100 cursor-pointer relative group"
+                  style={{ 
+                    background: 'var(--card-bg)',
+                    borderColor: 'var(--card-border)',
+                    boxShadow: 'var(--card-shadow)',
+                    transition: 'var(--transition)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = kpi.color;
+                    e.currentTarget.style.boxShadow = `0 0 30px ${kpi.color}40`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'var(--card-border)';
+                    e.currentTarget.style.boxShadow = 'var(--card-shadow)';
+                  }}
+                >
+                  {/* Glow effect */}
+                  <div 
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{
+                      background: `radial-gradient(circle at top left, ${kpi.color}10, transparent 70%)`,
+                      pointerEvents: 'none'
+                    }}
+                  />
+                  
+                  <div className="flex items-start justify-between mb-6 relative z-10">
+                    <div 
+                      className="w-12 h-12 rounded-xl flex items-center justify-center relative"
+                      style={{ 
+                        background: `linear-gradient(135deg, ${kpi.color}30, ${kpi.color}20)`,
+                        boxShadow: `0 0 20px ${kpi.color}30`
+                      }}
+                    >
+                      <Icon className="w-6 h-6" style={{ color: kpi.color }} />
+                    </div>
+                    <div 
+                      className={`flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg ${
+                        kpi.positive ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                      }`}
+                    >
+                      {kpi.positive ? <ArrowUp className="w-4 h-4" /> : <ArrowDown className="w-4 h-4" />}
+                      <span className="font-semibold">{kpi.change}</span>
+                    </div>
+                  </div>
+                  <p className="text-sm mb-2 relative z-10" style={{ color: 'var(--foreground)', opacity: 0.6 }}>
+                    {kpi.title}
+                  </p>
+                  <p 
+                    className="text-4xl font-bold relative z-10" 
+                    style={{ color: 'var(--foreground)' }}
+                  >
+                    {kpi.value}
+                  </p>
+                </div>
+              );
+            }
+            
+            return null;
+          })}
         </div>
 
-        {/* Cards de Acesso Rápido */}
-        <div>
-          <h2 className="text-xl mb-4 text-slate-900">Acesso Rápido</h2>
-          <div className="grid grid-cols-4 gap-4">
-            <button
-              onClick={() => onNavigate('pdv')}
-              className="bg-white border-2 border-slate-200 hover:border-green-500 rounded-2xl p-6 
-                       transition-all hover:shadow-lg group"
-            >
-              <ShoppingCart className="w-10 h-10 text-green-600 mb-3" />
-              <p className="font-medium text-slate-900">Nova Venda</p>
-              <p className="text-sm text-slate-500 mt-1">PDV Rápido</p>
-            </button>
-
-            <button
-              onClick={() => onNavigate('os')}
-              className="bg-white border-2 border-slate-200 hover:border-orange-500 rounded-2xl p-6 
-                       transition-all hover:shadow-lg group"
-            >
-              <Wrench className="w-10 h-10 text-orange-600 mb-3" />
-              <p className="font-medium text-slate-900">Nova OS</p>
-              <p className="text-sm text-slate-500 mt-1">Ordem de Serviço</p>
-            </button>
-
-            <button
-              onClick={() => onNavigate('estoque')}
-              className="bg-white border-2 border-slate-200 hover:border-cyan-500 rounded-2xl p-6 
-                       transition-all hover:shadow-lg group"
-            >
-              <Package className="w-10 h-10 text-cyan-600 mb-3" />
-              <p className="font-medium text-slate-900">Estoque</p>
-              <p className="text-sm text-slate-500 mt-1">Gerenciar</p>
-            </button>
-
-            <button
-              onClick={() => onNavigate('crm')}
-              className="bg-white border-2 border-slate-200 hover:border-pink-500 rounded-2xl p-6 
-                       transition-all hover:shadow-lg group"
-            >
-              <Users className="w-10 h-10 text-pink-600 mb-3" />
-              <p className="font-medium text-slate-900">Clientes</p>
-              <p className="text-sm text-slate-500 mt-1">CRM</p>
-            </button>
-          </div>
-        </div>
-
-        {/* Gráfico e War Room */}
-        <div className="grid grid-cols-3 gap-6">
-          {/* Gráfico de Desempenho */}
-          <div className="col-span-2 bg-white rounded-3xl p-6 shadow-lg border border-slate-200">
+        {/* Gráfico e Atividades */}
+        <div className={`grid gap-6 ${theme === 'dark' ? 'grid-cols-1' : 'grid-cols-3'}`}>
+          {/* Gráfico de Vendas */}
+          <div 
+            className={`${theme === 'dark' ? 'col-span-1' : 'col-span-2'} rounded-3xl p-6 animate-card`}
+            style={{ 
+              background: 'var(--card-bg)',
+              border: theme === 'minimalist' ? '1px solid var(--card-border)' : 'none',
+              boxShadow: theme === 'dark' ? 'var(--card-shadow)' : 'var(--shadow-md)',
+              backdropFilter: theme === 'modern' ? 'blur(var(--card-blur))' : 'none'
+            }}
+          >
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="text-xl text-slate-900 mb-1">Desempenho Semanal</h3>
-                <p className="text-sm text-slate-500">Vendas e serviços dos últimos 7 dias</p>
+                <h3 style={{ color: 'var(--foreground)' }}>Performance Semanal</h3>
+                <p className="text-sm mt-1" style={{ color: 'var(--foreground)', opacity: 0.6 }}>
+                  Vendas vs Serviços
+                </p>
               </div>
-              <TrendingUp className="w-6 h-6 text-green-500" />
+              <div className="flex gap-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full" style={{ background: '#3b82f6' }}></div>
+                  <span className="text-sm" style={{ color: 'var(--foreground)', opacity: 0.7 }}>Vendas</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full" style={{ background: '#8b5cf6' }}></div>
+                  <span className="text-sm" style={{ color: 'var(--foreground)', opacity: 0.7 }}>Serviços</span>
+                </div>
+              </div>
             </div>
-            <ResponsiveContainer width="100%" height={300}>
+            
+            <ResponsiveContainer width="100%" height={280}>
               <AreaChart data={salesData}>
                 <defs>
                   <linearGradient id="colorVendas" x1="0" y1="0" x2="0" y2="1">
@@ -174,38 +290,132 @@ export function Dashboard({ onNavigate }: DashboardProps) {
                     <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
                   </linearGradient>
                   <linearGradient id="colorServicos" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="name" stroke="#64748b" />
-                <YAxis stroke="#64748b" />
-                <Tooltip />
-                <Area type="monotone" dataKey="vendas" stroke="#3b82f6" strokeWidth={2} fillOpacity={1} fill="url(#colorVendas)" />
-                <Area type="monotone" dataKey="servicos" stroke="#10b981" strokeWidth={2} fillOpacity={1} fill="url(#colorServicos)" />
+                <CartesianGrid strokeDasharray="3 3" stroke={theme === 'dark' ? '#262626' : '#e2e8f0'} />
+                <XAxis 
+                  dataKey="name" 
+                  stroke={theme === 'dark' ? '#737373' : '#64748b'}
+                  style={{ fontSize: '12px' }}
+                />
+                <YAxis 
+                  stroke={theme === 'dark' ? '#737373' : '#64748b'}
+                  style={{ fontSize: '12px' }}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    background: theme === 'dark' ? '#171717' : '#ffffff',
+                    border: theme === 'dark' ? '1px solid #262626' : '1px solid #e2e8f0',
+                    borderRadius: '12px',
+                    color: theme === 'dark' ? '#fafafa' : '#0a0a0a'
+                  }}
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="vendas" 
+                  stroke="#3b82f6" 
+                  strokeWidth={theme === 'modern' ? 3 : 2}
+                  fillOpacity={1} 
+                  fill="url(#colorVendas)" 
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="servicos" 
+                  stroke="#8b5cf6" 
+                  strokeWidth={theme === 'modern' ? 3 : 2}
+                  fillOpacity={1} 
+                  fill="url(#colorServicos)" 
+                />
               </AreaChart>
             </ResponsiveContainer>
           </div>
 
-          {/* War Room - Status em Tempo Real */}
-          <div className="bg-white rounded-3xl p-6 shadow-lg border border-slate-200">
-            <h3 className="text-xl text-slate-900 mb-4">War Room</h3>
-            <div className="space-y-4">
-              {recentOrders.map((order) => (
-                <div key={order.id} className="border-l-4 border-slate-200 pl-4 py-2">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-medium text-slate-900">{order.id}</span>
-                    {order.status === 'concluido' && <CheckCircle2 className="w-4 h-4 text-green-500" />}
-                    {order.status === 'em-reparo' && <Clock className="w-4 h-4 text-orange-500" />}
-                    {order.status === 'aguardando' && <AlertCircle className="w-4 h-4 text-yellow-500" />}
+          {/* Atividades Recentes */}
+          {theme !== 'dark' && (
+            <div 
+              className="rounded-3xl p-6 animate-card"
+              style={{ 
+                background: 'var(--card-bg)',
+                border: theme === 'minimalist' ? '1px solid var(--card-border)' : 'none',
+                boxShadow: theme === 'dark' ? 'var(--card-shadow)' : 'var(--shadow-md)',
+                backdropFilter: theme === 'modern' ? 'blur(var(--card-blur))' : 'none'
+              }}
+            >
+              <h3 className="mb-6" style={{ color: 'var(--foreground)' }}>Ordens Recentes</h3>
+              <div className="space-y-4">
+                {recentOrders.map((order) => (
+                  <div 
+                    key={order.id}
+                    className="flex items-start gap-3 pb-4 border-b last:border-0 last:pb-0"
+                    style={{ borderColor: 'var(--card-border)' }}
+                  >
+                    <div 
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                        order.status === 'concluido' ? 'bg-success/20' :
+                        order.status === 'em-reparo' ? 'bg-primary/20' :
+                        'bg-warning/20'
+                      }`}
+                    >
+                      {order.status === 'concluido' ? (
+                        <CheckCircle2 className="w-5 h-5" style={{ color: 'var(--success)' }} />
+                      ) : order.status === 'em-reparo' ? (
+                        <Wrench className="w-5 h-5" style={{ color: 'var(--primary)' }} />
+                      ) : (
+                        <Clock className="w-5 h-5" style={{ color: 'var(--warning)' }} />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-sm truncate" style={{ color: 'var(--foreground)' }}>
+                        {order.id}
+                      </p>
+                      <p className="text-xs truncate" style={{ color: 'var(--foreground)', opacity: 0.6 }}>
+                        {order.client} • {order.device}
+                      </p>
+                      <p className="text-xs mt-1" style={{ color: 'var(--foreground)', opacity: 0.5 }}>
+                        {order.time}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-sm text-slate-700">{order.client}</p>
-                  <p className="text-xs text-slate-500">{order.device}</p>
-                  <p className="text-xs text-slate-400 mt-1">{order.time}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+          )}
+        </div>
+
+        {/* Ações Rápidas */}
+        <div 
+          className="rounded-3xl p-6 animate-card"
+          style={{ 
+            background: theme === 'modern' 
+              ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)'
+              : 'var(--card-bg)',
+            border: theme === 'minimalist' ? '1px solid var(--card-border)' : 'none',
+            boxShadow: theme === 'dark' ? 'var(--card-shadow)' : 'var(--shadow-md)',
+            backdropFilter: theme === 'modern' ? 'blur(var(--card-blur))' : 'none'
+          }}
+        >
+          <h3 className="mb-6" style={{ color: 'var(--foreground)' }}>
+            {theme === 'modern' && '⚡ '}Ações Rápidas
+          </h3>
+          <div className="grid grid-cols-5 gap-4">
+            {[
+              { icon: ShoppingCart, label: 'Novo PDV', module: 'pdv' as ModuleType },
+              { icon: Wrench, label: 'Nova OS', module: 'os' as ModuleType },
+              { icon: Package, label: 'Produtos', module: 'produtos' as ModuleType },
+              { icon: Users, label: 'Clientes', module: 'crm' as ModuleType },
+              { icon: DollarSign, label: 'Financeiro', module: 'financeiro' as ModuleType },
+            ].map((action, idx) => (
+              <button
+                key={idx}
+                onClick={() => onNavigate(action.module)}
+                className="btn-primary p-6 rounded-2xl flex flex-col items-center gap-3 group"
+              >
+                <action.icon className="w-8 h-8" />
+                <span className="text-sm font-semibold">{action.label}</span>
+              </button>
+            ))}
           </div>
         </div>
       </div>
